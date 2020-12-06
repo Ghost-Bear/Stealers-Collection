@@ -1,2 +1,6 @@
 __pycache__/
 /dev.exe
+/stealers-collection/config.py
+/stealers-collection/build/
+/build.dev.py
+*.spec
