@@ -8,6 +8,7 @@ Currently this stealers are aviable:
   - History stealer
   - Cookies stealer
 - Steam session stealer
+- SSH key stealer
 
 ## Guideline
 1. Register FTP server
